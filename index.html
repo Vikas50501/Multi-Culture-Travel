@@ -25,7 +25,32 @@
 	<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 		<script type="module" crossorigin src="js/app.js"></script>
 		<link rel="stylesheet" crossorigin href="css/app.css">
-	</head>
+		<style>
+		/* Gallery Section: 3-column Grid on Desktop, Swiper Slider on Mobile */
+		@media (min-width: 1024px) {
+			.gallery-swiper .swiper-wrapper {
+				display: grid !important;
+				grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+				gap: 2rem !important;
+				transform: none !important;
+				width: 100% !important;
+			}
+			.gallery-swiper .swiper-slide {
+				width: 100% !important;
+				margin-right: 0 !important;
+				height: auto !important;
+			}
+		}
+		@media (max-width: 1023px) {
+			.gallery-swiper {
+				overflow: visible !important;
+			}
+			.gallery-swiper .swiper-wrapper {
+				display: flex !important;
+			}
+		}
+	</style>
+</head>
 
 <body class="overflow-x-hidden">
 
@@ -1064,7 +1089,7 @@
 					</div>
 
 					<!-- Swiper Pagination (Mobile Only) -->
-					<div class="gallery-pagination flex justify-center mt-6 md:hidden"></div>
+					<div class="swiper-pagination mt-6 flex justify-center md:hidden"></div>
 				</div>
 			</div>
 		</section>
@@ -1508,7 +1533,7 @@
 						spaceBetween: 20,
 						centeredSlides: false,
 						pagination: {
-							el: '.gallery-pagination',
+							el: '.gallery-swiper .swiper-pagination',
 							clickable: true
 						},
 						breakpoints: {
