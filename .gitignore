@@ -1,4 +1,7 @@
 .claude/
+tripora-theme.zip
+*.zip
+tripora-theme/
 *.tmp
 .DS_Store
 Thumbs.db
