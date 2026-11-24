@@ -26,6 +26,105 @@
 		<script type="module" crossorigin src="js/app.js"></script>
 		<link rel="stylesheet" crossorigin href="css/app.css">
 		<style>
+		/* MotionSites Core Easing & Smooth Motion System */
+		:root {
+			--ease-out-expo: cubic-bezier(.16, 1, .3, 1);
+			--ease-out-quint: cubic-bezier(.22, 1, .36, 1);
+			--ease-out-cubic: cubic-bezier(.215, .61, .355, 1);
+			--ease-standard: cubic-bezier(.25, .1, .25, 1);
+			--ease-reveal: cubic-bezier(.25, .1, .25, 1);
+			--ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+		}
+
+		html {
+			scroll-behavior: smooth;
+		}
+
+		/* Staggered Blur-Rise Hero Entrance & Media Settle */
+		@keyframes msMediaSettle {
+			0% { transform: scale(1.07); }
+			100% { transform: scale(1); }
+		}
+		@keyframes msNavDown {
+			0% { opacity: 0; transform: translateY(-16px); }
+			100% { opacity: 1; transform: translateY(0); }
+		}
+		@keyframes msBlurRise {
+			0% {
+				opacity: 0;
+				transform: translateY(22px);
+				filter: blur(8px);
+			}
+			100% {
+				opacity: 1;
+				transform: translateY(0);
+				filter: blur(0);
+			}
+		}
+
+		.ms-hero-bg {
+			animation: msMediaSettle 2.4s var(--ease-out-expo) both;
+			will-change: transform;
+		}
+		.ms-nav-in {
+			animation: msNavDown 0.85s var(--ease-out-expo) 0.1s both;
+		}
+		.ms-eyebrow-in {
+			animation: msBlurRise 0.85s var(--ease-out-expo) 0.25s both;
+		}
+		.ms-title-in {
+			animation: msBlurRise 0.95s var(--ease-out-expo) 0.42s both;
+		}
+		.ms-desc-in {
+			animation: msBlurRise 0.9s var(--ease-out-expo) 0.58s both;
+		}
+		.ms-cta-in {
+			animation: msBlurRise 0.85s var(--ease-out-expo) 0.72s both;
+		}
+
+		/* MotionSites Tactile Card Lift & Smooth Zoom */
+		.ms-card-lift {
+			transition: transform 0.45s var(--ease-out-expo), box-shadow 0.45s var(--ease-out-expo) !important;
+		}
+		.ms-card-lift:hover {
+			transform: translateY(-5px) !important;
+			box-shadow: 0 20px 40px -12px rgba(27, 42, 74, 0.12) !important;
+		}
+
+		/* Smooth Image Transitions */
+		.ms-img-smooth {
+			transition: transform 0.65s var(--ease-out-expo) !important;
+		}
+		.group:hover .ms-img-smooth {
+			transform: scale(1.04) !important;
+		}
+
+		/* Viewport Reveal System */
+		.js [data-ms-reveal] {
+			opacity: 0;
+			transform: translate3d(var(--ms-x, 0px), var(--ms-y, 22px), 0);
+			filter: blur(var(--ms-blur, 3px));
+			transition: opacity var(--ms-dur, 0.75s) var(--ease-reveal) var(--ms-del, 0s),
+			            transform var(--ms-dur, 0.75s) var(--ease-reveal) var(--ms-del, 0s),
+			            filter var(--ms-dur, 0.75s) var(--ease-reveal) var(--ms-del, 0s);
+			will-change: opacity, transform, filter;
+		}
+		.js [data-ms-reveal].is-in {
+			opacity: 1;
+			transform: none;
+			filter: none;
+			will-change: auto;
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			*, *::before, *::after {
+				animation-duration: 0.01ms !important;
+				animation-iteration-count: 1 !important;
+				transition-duration: 0.01ms !important;
+				scroll-behavior: auto !important;
+			}
+		}
+
 		/* Gallery Section: 3-column Grid on Desktop, Swiper Slider on Mobile */
 		@media (min-width: 1024px) {
 			.gallery-swiper .swiper-wrapper {
@@ -55,7 +154,7 @@
 <body class="overflow-x-hidden">
 
 	<!-- Navbar -->
-	<header id="main-header" class="absolute inset-x-0 top-0 z-50 w-full py-3.75 md:py-5 lg:py-7.5 group/nav">
+	<header id="main-header" class="ms-nav-in absolute inset-x-0 top-0 z-50 w-full py-3.75 md:py-5 lg:py-7.5 group/nav">
 		<div id="top"></div>
 		<div class="container">
 			<div class="grid items-center grid-cols-2 md:grid-cols-3 rounded-full border border-dashed md:p-2.5 ps-5 py-2.5 pe-2.5 max-w-3xl mx-auto lg:bg-transparent! lg:backdrop-blur-none! lg:rounded-none! lg:border-none! lg:p-0! lg:max-w-none! lg:mx-0! group-[.is-dark]/nav:bg-black/20 group-[.is-dark]/nav:backdrop-blur-md group-[.is-dark]/nav:border-white/20 group-[.is-light]/nav:bg-white group-[.is-light]/nav:border-default-200 group-[.is-open]/nav:bg-transparent! group-[.is-open]/nav:border-transparent! group-[.is-open]/nav:shadow-none! group-[.is-open]/nav:backdrop-blur-none!">
@@ -149,7 +248,7 @@
 		<section class="relative flex items-center justify-center min-h-screen lg:pt-50 md:pt-40 pt-30 lg:pb-170 md:pb-110 pb-86 overflow-hidden">
 			<!-- Background Image & Overlays -->
 			<div class="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-				<img src="assets/images/hero-bg.jpg" alt="Mountain highway at golden hour - Multi Culture Travel World" data-aos="fade-in" data-aos-duration="2000" class="absolute inset-0 object-cover w-full h-full object-center" loading="eager">
+				<img src="assets/images/hero-bg.jpg" alt="Mountain highway at golden hour - Multi Culture Travel World" class="ms-hero-bg absolute inset-0 object-cover w-full h-full object-center" loading="eager">
 
 				<!-- Gradient Overlay -->
 				<div class="absolute inset-0 opacity-50 bg-linear-to-t from-black via-black/30 via-38% to-black/50 z-0"></div>
@@ -169,14 +268,14 @@
 			<div class="container relative z-10 text-center">
 
 				<!-- Pre-title -->
-				<div class="inline-flex items-center gap-2.5 py-1.5 px-4 md:mb-5 mb-4 bg-primary-1 rounded-full border border-dashed border-default-600">
+				<div class="ms-eyebrow-in inline-flex items-center gap-2.5 py-1.5 px-4 md:mb-5 mb-4 bg-primary-1 rounded-full border border-dashed border-default-600">
 					<img src="assets/images/icon-03.svg" alt="Icon" class="size-4">
 					<span class="text-sm text-default-600 tracking-wide font-normal">Calgary · Serving Canada Since 1992</span>
 					<img src="assets/images/icon-03.svg" alt="Icon" class="size-4">
 				</div>
 
 				<!-- Title -->
-				<h1 class="mb-5 text-4xl font-semibold tracking-tight text-white md:text-6xl lg:text-[90px] leading-[1.1]">
+				<h1 class="ms-title-in mb-5 text-4xl font-semibold tracking-tight text-white md:text-6xl lg:text-[90px] leading-[1.1]">
 					Travel the world,<br><span class="font-serif italic font-normal">rooted</span> in trust.
 				</h1>
 
@@ -1552,6 +1651,37 @@
 			}
 			initGallerySwiper();
 			setTimeout(initGallerySwiper, 500);
+		});
+	</script>
+	<script>
+		// MotionSites Smooth Scroll & Viewport Reveal Coordinator
+		document.addEventListener('DOMContentLoaded', function() {
+			document.documentElement.classList.add('js');
+			
+			// Auto-observe sections and card groups for buttery entrance
+			const revealCards = document.querySelectorAll('#gallery, .destinations-swiper, #services .grid > div, #about, #contact');
+			revealCards.forEach(function(el, idx) {
+				if (!el.hasAttribute('data-ms-reveal')) {
+					el.setAttribute('data-ms-reveal', '');
+					el.style.setProperty('--ms-del', (idx % 3 * 90) + 'ms');
+				}
+			});
+
+			const elements = document.querySelectorAll('[data-ms-reveal]');
+			if (elements.length && 'IntersectionObserver' in window) {
+				const observer = new IntersectionObserver(function(entries) {
+					entries.forEach(function(entry) {
+						if (entry.isIntersecting) {
+							entry.target.classList.add('is-in');
+							observer.unobserve(entry.target);
+						}
+					});
+				}, {
+					threshold: 0.1,
+					rootMargin: '0px 0px -40px 0px'
+				});
+				elements.forEach(function(el) { observer.observe(el); });
+			}
 		});
 	</script>
 </body>
